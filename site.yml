@@ -1,0 +1,58 @@
+---
+
+# Let's Encrypt certificates
+- hosts: letsencrypt
+  become: yes
+  gather_facts: True
+  vars:
+    letsencrypt_account_email: "your@email.here"
+    # staging/testing
+    letsencrypt_acme_directory: "https://acme-staging.api.letsencrypt.org/directory"
+    # production
+    #letsencrypt_acme_directory: "https://acme-v01.api.letsencrypt.org/directory"
+    letsencrypt_acme_version: 1
+    letsencrypt_challenge: "http-01"
+    letsencrypt_agreement: "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"
+    letsencrypt_remaining_days: 45
+    letsencrypt_cert_dir: "{{ playbook_dir }}/letsencrypt-certificates"
+
+
+  tasks:
+
+    # this will delete local outdated challenge files
+    - name: Find outdated challenge files
+      local_action:
+        module: find
+        paths: "{{ playbook_dir }}/letsencrypt-challenges/"
+        recurse: no
+        file_type: file
+        age: "1h"
+      register: outdated_challenge_files
+      become: no
+      run_once: true
+
+
+    - name: Delete outdated challenge files
+      local_action:
+        module: file
+        state: absent
+        path: "{{ item.path }}"
+      with_items: "{{ outdated_challenge_files.files }}"
+      become: no
+      run_once: true
+
+
+    - name: Handle certificate
+      include: "{{ playbook_dir }}/letsencrypt.yml"
+      with_items:
+        - host1.com
+        - www.host1.com
+        - host2.com
+        - www.host2.com
+      loop_control:
+        loop_var: domain
+
+  handlers:
+
+    - name: reload apache2
+      service: name=apache2 state=restarted
