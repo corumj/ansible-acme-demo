@@ -3,7 +3,7 @@ server {
 
     server_name {{ domain }};
 
-"/etc/certs/{{ domain }}/{{ cert }}"
+
     ssl_certificate /etc/certs/{{ domain }}/signed.crt;
     ssl_certificate_key /etc/certs/{{ domain }}/domain.key;
     ssl_dhparam /etc/certs/{{ domain }}/combined.pem;
