@@ -8,10 +8,10 @@
     letsencrypt_account_email: "corum@me.com"
     
     # staging/testing - switch to this while testing so you don't consume API calls
-    # letsencrypt_acme_directory: "https://acme-staging-v02.api.letsencrypt.org/directory"
+    letsencrypt_acme_directory: "https://acme-staging-v02.api.letsencrypt.org/directory"
     
     # production - once testing is complete, switch to this to create the real cert
-    letsencrypt_acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
+    # letsencrypt_acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
     letsencrypt_acme_version: 2
     letsencrypt_challenge: "http-01"
     letsencrypt_agreement: "https://letsencrypt.org/documents/LE-SA-v1.2-November-15-2017.pdf"

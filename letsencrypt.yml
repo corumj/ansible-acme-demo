@@ -2,14 +2,13 @@
 
 # create the domain directory for the cert files on localhost
 - name: create local cert directory
-  local_action:
-    module: file
+  file:
     path: "{{ letsencrypt_cert_dir }}/{{ domain }}"
     mode: 0700
     state: directory
   become: no
   run_once: true
-
+  delegate_to: localhost
 
 - name: Create web domain directory
   file:
@@ -56,12 +55,12 @@
 
 # generate account key, if necessary
 - name: Find account.key
-  local_action:
-    module: stat
+  stat:
     path: "{{ letsencrypt_cert_dir }}/{{ domain }}/account.key"
   register: account_key
   become: no
   run_once: true
+  delegate_to: localhost
 
 
 - name: Generate account.key
