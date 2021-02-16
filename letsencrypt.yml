@@ -131,6 +131,7 @@
       path: "{{ playbook_dir }}/letsencrypt-challenges/{{ create_challenge.challenge_data[domain]['http-01']['resource'] | basename }}"
       state: directory 
     delegate_to: localhost
+    become: no
 
   - name: Create challenge file
     local_action:
