@@ -202,6 +202,12 @@
   notify:
     - reload apache2
 
+- name: Setup SSL Config 
+  template:
+    src: ssl.conf.j2
+    dest: /etc/httpd/conf.d/ssl.conf 
+  notify:
+    - reload apache2
 
 - name: Delete old challenge file
   file:
