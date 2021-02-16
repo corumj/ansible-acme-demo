@@ -207,7 +207,7 @@
     src: ssl.conf.j2
     dest: /etc/nginx/conf.d/ssl.conf 
   notify:
-    - reload apache2
+    - reload nginx
 
 - name: Delete old challenge file
   file:

@@ -57,7 +57,7 @@
 
   handlers:
 
-    - name: reload apache2
+    - name: reload nginx
       service: 
-        name: httpd 
+        name: nginx 
         state: restarted
