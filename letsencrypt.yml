@@ -144,7 +144,7 @@
 
   - name: Create destination dir for challenge files on webserver
     file:
-      path: "/var/www/html/.well-known/acme-challenge/{{ challenge | basename }}"
+      path: "/var/www/html/.well-known/acme-challenge"
       state: directory
 
   - name: Copy all challenge files to webserver
