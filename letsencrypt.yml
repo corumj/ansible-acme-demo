@@ -126,7 +126,11 @@
 
 
 - block:
-
+  - name: 
+    file: 
+      path: "{{ playbook_dir }}/letsencrypt-challenges }}"
+      state: directory 
+      
   - name: Create challenge file
     local_action:
       module: copy
