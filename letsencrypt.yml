@@ -205,11 +205,11 @@
 - name: Setup SSL Config 
   template:
     src: ssl.conf.j2
-    dest: /etc/httpd/conf.d/ssl.conf 
+    dest: /etc/nginx/conf.d/ssl.conf 
   notify:
     - reload apache2
 
 - name: Delete old challenge file
   file:
     state: absent
-    path: "/srv/www/{{ domain }}/.well-known/acme-challenge/{{ create_challenge.challenge_data[domain]['http-01']['resource'] | basename }}"
+    path: "/var/www/html/.well-known/acme-challenge/{{ create_challenge.challenge_data[domain]['http-01']['resource'] | basename }}"

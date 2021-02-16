@@ -1,11 +1,10 @@
-LoadModule ssl_module modules/mod_ssl.so 
+server {
+    listen 443 http2 ssl;
 
-Listen 443
+    server_name {{ domain }};
 
-<VirtualHost {{ ansible_host }}:443>
-  DocumentRoot var/www/html
-  ServerName {{ domain }}
-  SSLEngine on
-  SSLCertificateFile /etc/certs/{{ domain }}/signed.crt # /etc/ssl/ssl-tutorials_com.crt
-  SSLCertificateKeyFile /etc/certs/{{ domain }}/domain.key # /etc/ssl/ssl-tutorials.key
-</VirtualHost>
+"/etc/certs/{{ domain }}/{{ cert }}"
+    ssl_certificate /etc/certs/{{ domain }}/signed.crt;
+    ssl_certificate_key /etc/certs/{{ domain }}/domain.key;
+    ssl_dhparam /etc/certs/{{ domain }}/combined.pem;
+}
