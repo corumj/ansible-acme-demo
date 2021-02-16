@@ -1,11 +1,11 @@
 ---
 
 # Let's Encrypt certificates
-- hosts: letsencrypt
+- hosts: node1
   become: yes
   gather_facts: True
   vars:
-    letsencrypt_account_email: "your@email.here"
+    letsencrypt_account_email: "corum@me.com"
     # staging/testing
     letsencrypt_acme_directory: "https://acme-staging.api.letsencrypt.org/directory"
     # production
