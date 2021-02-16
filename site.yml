@@ -1,14 +1,16 @@
 ---
 
-# Let's Encrypt certificates
+# Let's Encrypt certificates via ACME
 - hosts: node1
   become: yes
   gather_facts: True
   vars:
     letsencrypt_account_email: "corum@me.com"
-    # staging/testing
+    
+    # staging/testing - switch to this while testing so you don't consume API calls
     # letsencrypt_acme_directory: "https://acme-staging-v02.api.letsencrypt.org/directory"
-    # production
+    
+    # production - once testing is complete, switch to this to create the real cert
     letsencrypt_acme_directory: "https://acme-v02.api.letsencrypt.org/directory"
     letsencrypt_acme_version: 2
     letsencrypt_challenge: "http-01"
@@ -16,13 +18,11 @@
     letsencrypt_remaining_days: 45
     letsencrypt_cert_dir: "{{ playbook_dir }}/letsencrypt-certificates"
 
-
   tasks:
 
     # this will delete local outdated challenge files
     - name: Find outdated challenge files
-      local_action:
-        module: find
+      find:
         paths: "{{ playbook_dir }}/letsencrypt-challenges/"
         recurse: no
         file_type: file
@@ -30,16 +30,17 @@
       register: outdated_challenge_files
       become: no
       run_once: true
+      delegate_to: localhost
 
 
     - name: Delete outdated challenge files
-      local_action:
-        module: file
+      file:
         state: absent
         path: "{{ item.path }}"
       with_items: "{{ outdated_challenge_files.files }}"
       become: no
       run_once: true
+      delegate_to: localhost
 
     - name: Create www-data user 
       user:
