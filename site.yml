@@ -45,10 +45,7 @@
     - name: Handle certificate
       include: "{{ playbook_dir }}/letsencrypt.yml"
       with_items:
-        - host1.com
-        - www.host1.com
-        - host2.com
-        - www.host2.com
+        - test.peripatetic.me
       loop_control:
         loop_var: domain
 
