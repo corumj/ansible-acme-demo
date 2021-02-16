@@ -144,13 +144,13 @@
 
   - name: Create destination dir for challenge files on webserver
     file:
-      path: "/var/www/html/.well-known/acme-challenge"
+      path: "/usr/share/nginx/html/.well-known/acme-challenge"
       state: directory
 
   - name: Copy all challenge files to webserver
     copy:
       src: "{{ playbook_dir }}/letsencrypt-challenges/{{ challenge | basename }}"
-      dest: "/var/www/html/.well-known/acme-challenge/{{ challenge | basename }}"
+      dest: "/usr/share/nginx/html/.well-known/acme-challenge/{{ challenge | basename }}"
       owner: www-data
       group: www-data
       mode: 0555
@@ -212,4 +212,4 @@
 - name: Delete old challenge file
   file:
     state: absent
-    path: "/var/www/html/.well-known/acme-challenge/{{ create_challenge.challenge_data[domain]['http-01']['resource'] | basename }}"
+    path: "/usr/share/nginx/html/.well-known/acme-challenge/{{ create_challenge.challenge_data[domain]['http-01']['resource'] | basename }}"
