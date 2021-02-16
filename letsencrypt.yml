@@ -128,7 +128,7 @@
 - block:
   - name: Create challenge directory
     file: 
-      path: "{{ playbook_dir }}/letsencrypt-challenges/{{ create_challenge.challenge_data[domain]['http-01']['resource'] | basename }}"
+      path: "{{ playbook_dir }}/letsencrypt-challenges"
       state: directory 
     delegate_to: localhost
     become: no
